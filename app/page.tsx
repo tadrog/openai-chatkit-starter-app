@@ -2,10 +2,8 @@
 
 import "./globals.css";
 
-import { ChatKit } from "@openai/chatkit";
-import type { ChatKitOptions } from "@openai/chatkit";
-
-// ---- ChatKit UI Options (from Playground) ----
+import { ChatKit } from "@openai/chatkit/react";
+import type { ChatKitOptions } from "@openai/chatkit/react";
 
 const options: ChatKitOptions = {
   api: {},
@@ -62,7 +60,7 @@ const options: ChatKitOptions = {
         id: "gpt-5",
         label: "gpt-5",
         description: "Balanced intelligence",
-        default: true, // <-- FIX: cannot be `"default": true`
+        default: true,
       },
     ],
   },
@@ -77,8 +75,6 @@ const options: ChatKitOptions = {
     ],
   },
 };
-
-// ---- PAGE COMPONENT ----
 
 export default function Page() {
   return (
