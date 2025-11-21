@@ -268,8 +268,14 @@ export function ChatKitPanel({
       ...getThemeConfig(theme),
     },
     startScreen: {
-      greeting: GREETING,
-      prompts: STARTER_PROMPTS,
+      greeting: "Welcome to our support chat!",
+      prompts: [
+  { label: "Check order status", value: "Can you check the status of my order?" },
+  { label: "Reset my password", value: "I need help resetting my password." },
+  { label: "Report a problem", value: "I want to report an issue with my recent purchase." },
+  { label: "Product info", value: "Can you tell me more about your products?" },
+  { label: "Contact support", value: "I would like to speak to a human agent." }
+];
     },
     composer: {
       placeholder: PLACEHOLDER_INPUT,
