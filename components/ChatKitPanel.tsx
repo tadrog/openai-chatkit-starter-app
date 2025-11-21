@@ -193,6 +193,7 @@ export function ChatKitPanel({
           body: JSON.stringify({
             workflow: { id: WORKFLOW_ID },
             chatkit_configuration: {
+              // enable attachments
               file_upload: {
                 enabled: true,
               },
@@ -264,51 +265,21 @@ export function ChatKitPanel({
     api: { getClientSecret },
     theme: {
       colorScheme: theme,
-      color: {
-        accent: {
-          primary: theme === "dark" ? "#3B82F6" : "#2563EB",
-          level: 2
-        }
-      },
-      radius: "round",
-      density: "comfortable",
-      typography: { 
-        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-      },
       ...getThemeConfig(theme),
     },
     startScreen: {
-      greeting: "👋 " + GREETING,
+      greeting: GREETING,
       prompts: STARTER_PROMPTS,
     },
     composer: {
-      placeholder: PLACEHOLDER_INPUT || "Type your message here...",
+      placeholder: PLACEHOLDER_INPUT,
       attachments: {
+        // Enable attachments
         enabled: true,
-        uploadStrategy: { type: 'hosted' },
-        maxSize: 20 * 1024 * 1024,
-        maxCount: 5,
-        accept: { 
-          "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"],
-          "application/pdf": [".pdf"],
-          "text/*": [".txt", ".md", ".csv"],
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
-        },
-      },
-    },
-    header: {
-      customButtonRight: {
-        icon: "refresh",
-        onClick: () => {
-          if (confirm("Start a new chat? This will clear the current conversation.")) {
-            handleResetChat();
-          }
-        },
       },
     },
     threadItemActions: {
-      feedback: true,
-      copy: true,
+      feedback: false,
     },
     onClientTool: async (invocation: {
       name: string;
@@ -353,6 +324,8 @@ export function ChatKitPanel({
       processedFacts.current.clear();
     },
     onError: ({ error }: { error: unknown }) => {
+      // Note that Chatkit UI handles errors for your users.
+      // Thus, your app code doesn't need to display errors on UI.
       console.error("ChatKit error", error);
     },
   });
@@ -371,7 +344,7 @@ export function ChatKitPanel({
   }
 
   return (
-    <div className="relative pb-8 flex h-[90vh] w-full rounded-2xl flex-col overflow-hidden bg-white shadow-lg transition-colors dark:bg-slate-900 dark:shadow-2xl">
+    <div className="relative pb-8 flex h-[90vh] w-full rounded-2xl flex-col overflow-hidden bg-white shadow-sm transition-colors dark:bg-slate-900">
       <ChatKit
         key={widgetInstanceKey}
         control={chatkit.control}
